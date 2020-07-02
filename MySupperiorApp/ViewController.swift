@@ -9,14 +9,22 @@
 import Foundation
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
+    
+    // MARK: Properties
     
     @IBOutlet weak var textFieldLocationName: UITextField!
-    @IBOutlet weak var buttonGetForcast: UIButton!
+    @IBOutlet weak var buttonGetForecast: UIButton!
     @IBOutlet weak var buttonGetWeather: UIButton!
+    @IBOutlet weak var imageViewCurrentWeather: UIImageView!
+    @IBOutlet weak var labelCurrentWeather: UILabel!
+    @IBOutlet weak var stackViewCurrentWeather: UIStackView!
+    @IBOutlet weak var tableViewCurrentWeather: UITableView!
     
     private let defaultCityName = "London"
     private let defaultCountryCode = "uk"
+    
+    private var defaultTextFieldBackgroundColor: UIColor? = nil
     
     private var weatherDataOnlineManager: WeatherDataOnlineManager? = nil
     
@@ -28,14 +36,29 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // Do any additional setup after loading the view.
         
+        // TextField initialization
         textFieldLocationName.placeholder = "Enter location name, (e.g. \(defaultCityName),\(defaultCountryCode)"
+        // Handle the text field’s user input through delegate callbacks.
+        textFieldLocationName.delegate = self
+        
+        defaultTextFieldBackgroundColor = textFieldLocationName.backgroundColor
+        
+        // Button initialization
+        setButtonDisabled(button: buttonGetForecast)
+        setButtonDisabled(button: buttonGetWeather)
+        
+        // Current Weather view initialization
+        labelCurrentWeather.text = nil
+        
+        // TableView initialization
+        tableViewCurrentWeather.delegate = self
+        tableViewCurrentWeather.dataSource = self
     }
     
-    func changeViewColor(weatherType : WeatherType) {
-        view.backgroundColor = makeWeatherColor(weatherType: weatherType)
-    }
+    // MARK: Actions
     
     @IBAction func touchedButtonGetWeather(_ sender: Any) {
         guard let locationName = textFieldLocationName.text, !locationName.isEmpty else {
@@ -79,6 +102,63 @@ class ViewController: UIViewController {
         countryCode = countryCode?.trimmingCharacters(in: .whitespacesAndNewlines)
         
         weatherDataOnlineManager?.requestData(locationName: cityName!, countryCode: countryCode!)
+        
+        textFieldLocationName.text = nil
+        setButtonDisabled(button: buttonGetForecast)
+        setButtonDisabled(button: buttonGetWeather)
+    }
+    @IBAction func gestureRecognizerTap(_ sender: Any) {
+        showToast(message: "HStack control tapped")
+    }
+    
+    // MARK: UITextFieldDelegate
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        let text = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+        
+        if text.isEmpty{
+            setButtonDisabled(button: buttonGetForecast)
+            setButtonDisabled(button: buttonGetWeather)
+            
+        } else {
+            
+            setButtonEnabled(button: buttonGetForecast)
+            setButtonEnabled(button: buttonGetWeather)
+        }
+        
+        return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // Hide the keyboard.
+        textField.resignFirstResponder()
+        
+        return true
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+    }
+    
+    // MARK: TableView
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return UITableViewCell()
+    }
+    
+    // MARK: Methods
+    
+    func changeViewColor(weatherType : WeatherType) {
+        let weatherColor = makeWeatherColor(weatherType: weatherType)
+        labelCurrentWeather.backgroundColor = weatherColor
+        imageViewCurrentWeather.backgroundColor = weatherColor
     }
     
     func makeWeatherColor(weatherType: WeatherType) -> UIColor {
@@ -109,6 +189,18 @@ class ViewController: UIViewController {
             green: (green / 255.0),
             blue: (blue / 255.0),
             alpha: 1.0)
+    }
+    
+    func setButtonEnabled(button: UIButton)
+    {
+        button.isEnabled = true
+        button.alpha = 1
+    }
+    
+    func setButtonDisabled(button:UIButton)
+    {
+        button.isEnabled = false
+        button.alpha = 0.2
     }
     
 }

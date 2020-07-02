@@ -139,6 +139,15 @@ class WeatherDataOnlineManager {
             DispatchQueue.main.async {
                 let weatherType = self.getWeatherType(weatherData: weatherData)
                 self.viewController.changeViewColor(weatherType: weatherType)
+                let degreesInCelsius = weatherData.temperature - 273
+                let temperature = String(format: "%.2f", degreesInCelsius)
+                let weatherText =
+                """
+                \(weatherData.locationName)
+                \(weatherData.country)
+                \(temperature)°C
+                """
+                self.viewController.labelCurrentWeather.text = weatherText
             }
         }
         catch {
