@@ -138,7 +138,7 @@ class WeatherDataOnlineManager {
             // ViewController methods need to be called on the main thread async
             DispatchQueue.main.async {
                 let weatherType = self.getWeatherType(weatherData: weatherData)
-                self.viewController.changeViewColor(weatherType: weatherType)
+
                 let degreesInCelsius = weatherData.temperature - 273
                 let temperature = String(format: "%.2f", degreesInCelsius)
                 let weatherText =
@@ -147,7 +147,8 @@ class WeatherDataOnlineManager {
                 \(weatherData.country)
                 \(temperature)°C
                 """
-                self.viewController.labelCurrentWeather.text = weatherText
+
+                self.viewController.setCurrentWeather(weatherType: weatherType, weatherText: weatherText)
             }
         }
         catch {

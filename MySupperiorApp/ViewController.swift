@@ -150,7 +150,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        return TableViewCellCurrentWeather()
     }
     
     // MARK: Methods
@@ -201,6 +201,36 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
     {
         button.isEnabled = false
         button.alpha = 0.2
+    }
+    
+    func setCurrentWeather(weatherType: WeatherType, weatherText: String)
+    {
+        changeViewColor(weatherType: weatherType)
+
+        let weatherImageName = {
+            () -> String in
+            switch(weatherType) {
+            case WeatherType.Cloudy:
+                return "cloudy.png"
+            case WeatherType.Rainy:
+                return "rainy.png"
+            case WeatherType.Stormy:
+                return "thunder-storm.png"
+            case WeatherType.Sunny:
+                return "sunny.png"
+            }
+        }()
+        
+        imageViewCurrentWeather.image = UIImage(named: weatherImageName);
+        labelCurrentWeather.text = weatherText
+    }
+    
+    func clearCurrentWeather()
+    {
+        // TODO: changeViewColor(weatherType: weatherType)
+        
+        imageViewCurrentWeather.image = nil
+        labelCurrentWeather.text = nil
     }
     
 }
