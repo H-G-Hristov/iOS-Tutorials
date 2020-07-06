@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 
+import os.log
+
 class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
     
     // MARK: Properties
@@ -20,13 +22,22 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
     @IBOutlet weak var labelCurrentWeather: UILabel!
     @IBOutlet weak var stackViewCurrentWeather: UIStackView!
     @IBOutlet weak var tableViewCurrentWeather: UITableView!
+    @IBOutlet var tapGestureRecognizerCurrentWeather: UITapGestureRecognizer!
+    
+    
+    
+    // MARK: Constants
     
     private let defaultCityName = "London"
     private let defaultCountryCode = "uk"
     
+    // MARK: Variables
+    
     private var defaultTextFieldBackgroundColor: UIColor? = nil
     
     private var weatherDataOnlineManager: WeatherDataOnlineManager? = nil
+    
+    // MARK: Initializers and delegates
     
     required init?(coder: NSCoder?) {
         super.init(coder: coder!)
@@ -52,6 +63,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
         
         // Current Weather view initialization
         labelCurrentWeather.text = nil
+        tapGestureRecognizerCurrentWeather.isEnabled = false
         
         // TableView initialization
         tableViewCurrentWeather.delegate = self
@@ -62,7 +74,10 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
     
     @IBAction func touchedButtonGetWeather(_ sender: Any) {
         guard let locationName = textFieldLocationName.text, !locationName.isEmpty else {
-            showToast(message: "Please, enter a location!")
+            //showToast(message: "Please, enter a location!")
+            
+            os_log("The save button was not pressed, cancelling", log: OSLog.default, type: .debug)
+            
             return
         }
         
@@ -82,8 +97,10 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
             countryCode = defaultCountryCode
         }
         
+        #if DEBUG_VERBOSE_PRINT
         print("City name:    ", cityName ?? "")
         print("Country code: ", countryCode ?? "")
+        #endif
         
         guard nil != cityName && nil != countryCode else {
             showToast(
@@ -107,8 +124,30 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
         setButtonDisabled(button: buttonGetForecast)
         setButtonDisabled(button: buttonGetWeather)
     }
+    
     @IBAction func gestureRecognizerTap(_ sender: Any) {
-        showToast(message: "HStack control tapped")
+        //showToast(message: "HStack control tapped")
+    }
+    
+    @IBAction func unwindToWorldWeatherData(sender: UIStoryboardSegue) {
+        //os_log("Button clicked")
+    }
+    
+    // MARK: Navigation
+    
+    // This method lets you configure a view controller before it's presented.
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        
+        let viewControllerLocalWeather = segue.destination as! ViewControllerLocalWeather
+        
+        if let image = imageViewCurrentWeather.image {
+            viewControllerLocalWeather.localWeatherImage = image
+        }
+        
+        if let attribitedText = labelCurrentWeather.attributedText {
+            viewControllerLocalWeather.localWeatherAttributedString = attribitedText
+        }
     }
     
     // MARK: UITextFieldDelegate
@@ -206,7 +245,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
     func setCurrentWeather(weatherType: WeatherType, weatherText: String)
     {
         changeViewColor(weatherType: weatherType)
-
+        
         let weatherImageName = {
             () -> String in
             switch(weatherType) {
@@ -222,7 +261,14 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
         }()
         
         imageViewCurrentWeather.image = UIImage(named: weatherImageName);
-        labelCurrentWeather.text = weatherText
+        
+        let data = Data(weatherText.utf8)
+        if let attributedString = try? NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
+            // use your attributed string somehow
+            labelCurrentWeather.attributedText = attributedString
+        }
+        
+        tapGestureRecognizerCurrentWeather.isEnabled = true
     }
     
     func clearCurrentWeather()

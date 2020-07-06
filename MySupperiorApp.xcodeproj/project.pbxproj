@@ -19,6 +19,7 @@
 		381BBA812498EB2F00737C16 /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381BBA802498EB2F00737C16 /* WeatherData.swift */; };
 		389177222498DB760020854E /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389177212498DB760020854E /* UIViewControllerExtension.swift */; };
 		38AAF21424ACE0FF009172EE /* WeatherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AAF21324ACE0FF009172EE /* WeatherTableViewCell.swift */; };
+		38D8CD6A24AF4A3C0086D49D /* ViewControllerLocalWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D8CD6924AF4A3C0086D49D /* ViewControllerLocalWeather.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		381BBA802498EB2F00737C16 /* WeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
 		389177212498DB760020854E /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 		38AAF21324ACE0FF009172EE /* WeatherTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherTableViewCell.swift; sourceTree = "<group>"; };
+		38D8CD6924AF4A3C0086D49D /* ViewControllerLocalWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerLocalWeather.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 				380128CC2493A05700C714BC /* AppDelegate.swift */,
 				380128CE2493A05700C714BC /* SceneDelegate.swift */,
 				380128D02493A05700C714BC /* ViewController.swift */,
+				38D8CD6924AF4A3C0086D49D /* ViewControllerLocalWeather.swift */,
 				380128D22493A05700C714BC /* Main.storyboard */,
 				38AAF21324ACE0FF009172EE /* WeatherTableViewCell.swift */,
 				380128D82493A05900C714BC /* Assets.xcassets */,
@@ -289,6 +292,7 @@
 			files = (
 				380128D12493A05700C714BC /* ViewController.swift in Sources */,
 				380128CD2493A05700C714BC /* AppDelegate.swift in Sources */,
+				38D8CD6A24AF4A3C0086D49D /* ViewControllerLocalWeather.swift in Sources */,
 				38AAF21424ACE0FF009172EE /* WeatherTableViewCell.swift in Sources */,
 				380128CF2493A05700C714BC /* SceneDelegate.swift in Sources */,
 				389177222498DB760020854E /* UIViewControllerExtension.swift in Sources */,

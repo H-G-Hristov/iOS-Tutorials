@@ -97,6 +97,63 @@ class WeatherDataOnlineManager {
         return NSURL(string: urlString)! as URL
     }
     
+    private func buildHtml(weatherData: WeatherData) -> String
+    {
+        let degreesInCelsius = weatherData.temperature - 273
+        let temperature = String(format: "%.2f", degreesInCelsius)
+        let weatherCssStyles =
+        """
+                body {
+                  text-indent: 50px;
+                }
+                .location {
+                  font-size: 24px;
+                  font-family: -apple-system;
+                  font-weight: bolder;
+                  /*font-stretch: ultra-expanded;*/
+                  color: darkred;
+                  text-shadow: 0px 0px 5px #FF9;
+                  -webkit-font-smoothing: antialiased;
+                }
+                .country {
+                  font-size: 18px;
+                  font-family: -apple-system;
+                  /*font-stretch: ultra-expanded;*/
+                  font-style: italic;
+                  color: lightred;
+                  text-shadow: 0px 0px 5px #FF9;
+                  -webkit-font-smoothing: antialiased;
+                }
+                .temperature {
+                  font-size: 36px;
+                  font-family: -apple-system;
+                  /*font-stretch: ultra-expanded;*/
+                  color: darkblue;
+                  text-shadow: #fff 0px 0px 5px #FF9;
+                  -webkit-font-smoothing: antialiased;
+                }
+        """
+        let weatherText =
+        """
+        <html>
+        <style type="text/css">
+        \(weatherCssStyles)
+        </style>
+        <body>
+        <div>
+        <div>&nbsp;&nbsp;<span class="location">\(weatherData.locationName)</span></div>
+        <div>&nbsp;&nbsp;<span class="country">\(weatherData.country)</span></div>
+        <!--<div>\(temperature)°C</div>-->
+        <div>&nbsp;&nbsp;<span class="temperature">\(temperature)&#176;C</span></div>
+        </div>
+        </body>
+        </html>
+        """
+        
+        return weatherText
+    }
+    
+    
     private func makeWeatherDataCurrent(jsonData: JSONWeatherData) -> WeatherData {
         return WeatherData(
             locationName: jsonData.name,
@@ -126,28 +183,24 @@ class WeatherDataOnlineManager {
     {
         let dataString = String(data: data!, encoding: String.Encoding.utf8)
         
+        #if DEBUG_VERBOSE_PRINT
         print("Human-readable data:\n\(dataString!)")
+        #endif
         
         do {
             let jsonData = try self.jsonDecoder.decode(JSONWeatherData.self, from: data!)
             let weatherData = self.makeWeatherDataCurrent(jsonData: jsonData)
             
+            #if DEBUG_VERBOSE_PRINT
             print("JSON data: \(jsonData)")
             print("Current weather data: \(weatherData)")
+            #endif
             
             // ViewController methods need to be called on the main thread async
             DispatchQueue.main.async {
                 let weatherType = self.getWeatherType(weatherData: weatherData)
-
-                let degreesInCelsius = weatherData.temperature - 273
-                let temperature = String(format: "%.2f", degreesInCelsius)
-                let weatherText =
-                """
-                \(weatherData.locationName)
-                \(weatherData.country)
-                \(temperature)°C
-                """
-
+                let weatherText = self.buildHtml(weatherData: weatherData)
+                
                 self.viewController.setCurrentWeather(weatherType: weatherType, weatherText: weatherText)
             }
         }
