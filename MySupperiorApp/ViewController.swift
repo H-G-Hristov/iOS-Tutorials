@@ -11,7 +11,7 @@ import UIKit
 
 import os.log
 
-class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
+class ViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: Properties
     
@@ -24,8 +24,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
     @IBOutlet weak var tableViewCurrentWeather: UITableView!
     @IBOutlet var tapGestureRecognizerCurrentWeather: UITapGestureRecognizer!
     
-    
-    
     // MARK: Constants
     
     private let defaultCityName = "London"
@@ -34,8 +32,9 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
     // MARK: Variables
     
     private var defaultTextFieldBackgroundColor: UIColor? = nil
-    
     private var weatherDataOnlineManager: WeatherDataOnlineManager? = nil
+    
+    private var currentSavedWeatherData: SavedWeatherData? = nil
     
     // MARK: Initializers and delegates
     
@@ -74,8 +73,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
     
     @IBAction func touchedButtonGetWeather(_ sender: Any) {
         guard let locationName = textFieldLocationName.text, !locationName.isEmpty else {
-            //showToast(message: "Please, enter a location!")
-            
             os_log("The save button was not pressed, cancelling", log: OSLog.default, type: .debug)
             
             return
@@ -96,11 +93,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
             cityName = defaultCityName
             countryCode = defaultCountryCode
         }
-        
-        #if DEBUG_VERBOSE_PRINT
-        print("City name:    ", cityName ?? "")
-        print("Country code: ", countryCode ?? "")
-        #endif
         
         guard nil != cityName && nil != countryCode else {
             showToast(
@@ -126,11 +118,9 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
     }
     
     @IBAction func gestureRecognizerTap(_ sender: Any) {
-        //showToast(message: "HStack control tapped")
     }
     
     @IBAction func unwindToWorldWeatherData(sender: UIStoryboardSegue) {
-        //os_log("Button clicked")
     }
     
     // MARK: Navigation
@@ -153,7 +143,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
     // MARK: UITextFieldDelegate
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        
         let text = (textField.text! as NSString).replacingCharacters(in: range, with: string)
         
         if text.isEmpty{
@@ -180,16 +169,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-    }
-    
-    // MARK: TableView
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return TableViewCellCurrentWeather()
     }
     
     // MARK: Methods
@@ -230,53 +209,62 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
             alpha: 1.0)
     }
     
-    func setButtonEnabled(button: UIButton)
-    {
+    func setButtonEnabled(button: UIButton) {
         button.isEnabled = true
         button.alpha = 1
     }
     
-    func setButtonDisabled(button:UIButton)
-    {
+    func setButtonDisabled(button:UIButton) {
         button.isEnabled = false
         button.alpha = 0.2
     }
     
-    func setCurrentWeather(weatherType: WeatherType, weatherText: String)
-    {
-        changeViewColor(weatherType: weatherType)
+    func setCurrentWeather(weatherData: WeatherData) {
+        currentSavedWeatherData = SavedWeatherData(weatherData: weatherData)
         
-        let weatherImageName = {
-            () -> String in
-            switch(weatherType) {
-            case WeatherType.Cloudy:
-                return "cloudy.png"
-            case WeatherType.Rainy:
-                return "rainy.png"
-            case WeatherType.Stormy:
-                return "thunder-storm.png"
-            case WeatherType.Sunny:
-                return "sunny.png"
-            }
-        }()
-        
-        imageViewCurrentWeather.image = UIImage(named: weatherImageName);
-        
-        let data = Data(weatherText.utf8)
-        if let attributedString = try? NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
-            // use your attributed string somehow
-            labelCurrentWeather.attributedText = attributedString
+        displayCurrentWeather(savedWeatherData: currentSavedWeatherData!)
+    }
+    
+    func displayCurrentWeather(savedWeatherData: SavedWeatherData) {
+        if let attributedText = savedWeatherData.weatherAttributedText {
+            imageViewCurrentWeather.image = UIImage(named: savedWeatherData.imageName);
+            labelCurrentWeather.attributedText = attributedText
+            
+            changeViewColor(weatherType: savedWeatherData.weatherType)
         }
         
         tapGestureRecognizerCurrentWeather.isEnabled = true
     }
     
-    func clearCurrentWeather()
-    {
+    func clearCurrentWeather() {
         // TODO: changeViewColor(weatherType: weatherType)
         
         imageViewCurrentWeather.image = nil
         labelCurrentWeather.text = nil
     }
     
+    func saveCurrentWeatherToTableView() {
+        os_log("Save current weather to TableView")
+        //showToast(message: "Save current weather to TableView", seconds: 2)
+    }
+    
+}
+
+extension ViewController: UITableViewDataSource {
+        // MARK: TableView
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 20000
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCellCurrentWeather", for: indexPath)
+        
+        
+        
+        return cell
+    }
+}
+
+extension ViewController: UITableViewDelegate {
 }

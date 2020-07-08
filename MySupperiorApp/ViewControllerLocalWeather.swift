@@ -47,6 +47,10 @@ class ViewControllerLocalWeather: UIViewController {
             
             return
         }
+        
+        let viewController = segue.destination as! ViewController
+        
+        viewController.saveCurrentWeatherToTableView()
     }
     
 }

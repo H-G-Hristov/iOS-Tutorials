@@ -1,21 +1,15 @@
 //
-//  WeatherTableViewCell.swift
+//  CellTableViewCell.swift
 //  MySupperiorApp
 //
-//  Created by Hristo Hristov on 1.07.20.
+//  Created by Hristo Hristov on 7.07.20.
 //  Copyright © 2020 Hristo Hristov. All rights reserved.
 //
 
 import UIKit
 
-class TableViewCellCurrentWeather: UITableViewCell {
-    
-    // MARK: Properties
-    @IBOutlet weak var imageViewWeather: UIImageView!
-    @IBOutlet weak var labelWeather: UILabel!
-    @IBOutlet weak var countryLabel: UILabel!
-    @IBOutlet weak var celcuisLabel: UILabel!
-    
+class CellTableViewCell: UITableViewCell {
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -26,5 +20,5 @@ class TableViewCellCurrentWeather: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
+    
 }

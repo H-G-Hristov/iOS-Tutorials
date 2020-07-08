@@ -103,28 +103,51 @@
                                         <rect key="frame" x="8" y="224" width="288" height="284"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="50" id="LaY-TU-elH" customClass="TableViewCellCurrentWeather" customModule="MySupperiorApp" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="28" width="288" height="50"/>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TableViewCellCurrentWeather" rowHeight="70" id="LaY-TU-elH" customClass="TableViewCellCurrentWeather" customModule="MySupperiorApp" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="28" width="288" height="70"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="LaY-TU-elH" id="Fvm-lY-cDJ">
-                                                    <rect key="frame" x="0.0" y="0.0" width="288" height="50"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="288" height="70"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Ekh-Nf-FRh">
-                                                            <rect key="frame" x="4" y="4" width="280" height="42"/>
+                                                            <rect key="frame" x="4" y="4" width="280" height="62"/>
                                                             <subviews>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sHe-Tw-dWJ">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="42"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="62"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="50" id="u9i-df-pSY"/>
                                                                     </constraints>
                                                                 </imageView>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="London United Kingdom 20C" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="L5X-wR-wSB">
-                                                                    <rect key="frame" x="58" y="0.0" width="222" height="42"/>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                    <nil key="textColor"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="jt2-zO-gwz">
+                                                                    <rect key="frame" x="58" y="0.0" width="222" height="62"/>
+                                                                    <subviews>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="London" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="L5X-wR-wSB">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="222" height="20.5"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="height" constant="20.5" id="A5q-27-8G7"/>
+                                                                            </constraints>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                            <nil key="textColor"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="United Kingdom" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="z3o-yu-1Iv">
+                                                                            <rect key="frame" x="0.0" y="20.5" width="222" height="21"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="height" constant="21" id="LhA-zV-ux0"/>
+                                                                            </constraints>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                            <nil key="textColor"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20C" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="bF5-GP-6Ws">
+                                                                            <rect key="frame" x="0.0" y="41.5" width="222" height="20.5"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                            <nil key="textColor"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                    </subviews>
+                                                                </stackView>
                                                             </subviews>
                                                         </stackView>
                                                     </subviews>
@@ -136,6 +159,8 @@
                                                     </constraints>
                                                 </tableViewCellContentView>
                                                 <connections>
+                                                    <outlet property="celcuisLabel" destination="bF5-GP-6Ws" id="Vb3-t8-Iqj"/>
+                                                    <outlet property="countryLabel" destination="z3o-yu-1Iv" id="mCo-5H-D8w"/>
                                                     <outlet property="imageViewWeather" destination="sHe-Tw-dWJ" id="YJI-ui-Fyn"/>
                                                     <outlet property="labelWeather" destination="L5X-wR-wSB" id="0v6-HF-uVI"/>
                                                 </connections>
@@ -185,7 +210,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1126.875" y="137.32394366197184"/>
+            <point key="canvasLocation" x="795" y="136.26760563380282"/>
         </scene>
         <!--Local Weather-->
         <scene sceneID="WbM-Xp-ZWT">
@@ -198,11 +223,19 @@
                             <stackView opaque="NO" contentMode="top" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="NoA-vY-LMU">
                                 <rect key="frame" x="40" y="68" width="240" height="476"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EGJ-Fc-lN7">
-                                        <rect key="frame" x="0.0" y="0.0" width="240" height="360.5"/>
-                                    </imageView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="1AI-Kn-vBi">
+                                        <rect key="frame" x="0.0" y="0.0" width="240" height="240"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EGJ-Fc-lN7">
+                                                <rect key="frame" x="0.0" y="0.0" width="240" height="240"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="EGJ-Fc-lN7" secondAttribute="height" id="pik-3b-kx6"/>
+                                                </constraints>
+                                            </imageView>
+                                        </subviews>
+                                    </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="London United Kingdom 20C" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ddx-qq-PYU">
-                                        <rect key="frame" x="0.0" y="376.5" width="240" height="99.5"/>
+                                        <rect key="frame" x="0.0" y="256" width="240" height="220"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -235,7 +268,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HlX-sq-wSQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="J6r-8G-Umh" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1989.375" y="137.32394366197184"/>
+            <point key="canvasLocation" x="1549" y="136"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="0n7-Cc-pX3">
@@ -257,7 +290,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BZ4-Zo-rd2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="129.375" y="137.32394366197184"/>
+            <point key="canvasLocation" x="13" y="136"/>
         </scene>
     </scenes>
 </document>
