@@ -18,21 +18,48 @@ class ViewControllerLocalWeather: UIViewController {
     @IBOutlet weak var barButtonItemSave: UIBarButtonItem!
     @IBOutlet weak var imageViewLocalWeather: UIImageView!
     @IBOutlet weak var labelLocalWeather: UILabel!
+    @IBOutlet weak var labelLocalWeatherHumidity: UILabel!
+    @IBOutlet weak var labelLocalWeatherWindSpeed: UILabel!
+    @IBOutlet weak var labelLoacalWeatherPressure: UILabel!
     
-    var localWeatherImage: UIImage?
-    var localWeatherAttributedString: NSAttributedString?
+    var savedWeatherData: SavedWeatherData?
     
     // MARK: Initializers and delegates
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let receivedImage = localWeatherImage {
+        guard savedWeatherData != nil else {
+            return
+        }
+        
+        if let imageName = savedWeatherData?.imageName, let receivedImage = UIImage(named: imageName) {
             imageViewLocalWeather.image = receivedImage
         }
-        if let receivedAttributedText = localWeatherAttributedString {
+        if let receivedAttributedText = savedWeatherData?.weatherAttributedText {
             labelLocalWeather.attributedText = receivedAttributedText
         }
+        
+        let weatherData = savedWeatherData?.weatherData
+        
+        var humidityStr = String()
+        if let humidity = weatherData?.humidity {
+            humidityStr.append("\(humidity)%")
+        }
+        labelLocalWeatherHumidity.text = humidityStr
+        
+        var windSpeedStr = String()
+        if var windSpeed = weatherData?.windSpeed {
+            windSpeed /= 1000.0
+            windSpeedStr.append("\(windSpeed) m/s")
+        }
+        labelLocalWeatherWindSpeed.text = windSpeedStr
+        
+        var pressureStr = String()
+        if let pressure = weatherData?.pressure {
+            pressureStr.append("\(pressure) kPa")
+        }
+        labelLoacalWeatherPressure.text = pressureStr
     }
     
     // MARK: Navigation

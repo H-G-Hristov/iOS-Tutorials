@@ -21,7 +21,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var imageViewCurrentWeather: UIImageView!
     @IBOutlet weak var labelCurrentWeather: UILabel!
     @IBOutlet weak var stackViewCurrentWeather: UIStackView!
-    @IBOutlet weak var tableViewCurrentWeather: UITableView!
+    @IBOutlet weak var tableViewSavedWeather: UITableView!
     @IBOutlet var tapGestureRecognizerCurrentWeather: UITapGestureRecognizer!
     
     // MARK: Constants
@@ -35,6 +35,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
     private var weatherDataOnlineManager: WeatherDataOnlineManager? = nil
     
     private var currentSavedWeatherData: SavedWeatherData? = nil
+    
+    private var savedWeatherDataSource = [SavedWeatherData]()
     
     // MARK: Initializers and delegates
     
@@ -65,8 +67,12 @@ class ViewController: UIViewController, UITextFieldDelegate {
         tapGestureRecognizerCurrentWeather.isEnabled = false
         
         // TableView initialization
-        tableViewCurrentWeather.delegate = self
-        tableViewCurrentWeather.dataSource = self
+        tableViewSavedWeather.delegate = self
+        tableViewSavedWeather.dataSource = self
+        
+        // TableView initialize cell
+        let nibName = UINib.init(nibName: "TableViewCellSavedWeather", bundle: nil)
+        self.tableViewSavedWeather.register(nibName, forCellReuseIdentifier: "tableViewCellSavedWeather")
     }
     
     // MARK: Actions
@@ -131,13 +137,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         let viewControllerLocalWeather = segue.destination as! ViewControllerLocalWeather
         
-        if let image = imageViewCurrentWeather.image {
-            viewControllerLocalWeather.localWeatherImage = image
-        }
-        
-        if let attribitedText = labelCurrentWeather.attributedText {
-            viewControllerLocalWeather.localWeatherAttributedString = attribitedText
-        }
+        viewControllerLocalWeather.savedWeatherData = self.currentSavedWeatherData
     }
     
     // MARK: UITextFieldDelegate
@@ -244,24 +244,32 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
     func saveCurrentWeatherToTableView() {
-        os_log("Save current weather to TableView")
-        //showToast(message: "Save current weather to TableView", seconds: 2)
+        if let savedWeatherData = currentSavedWeatherData {
+            savedWeatherDataSource.append(savedWeatherData)
+        }
     }
-    
+
 }
 
 extension ViewController: UITableViewDataSource {
-        // MARK: TableView
-    
+
+    // MARK: TableView
+
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        return 1
+//    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20000
+        return savedWeatherDataSource.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCellCurrentWeather", for: indexPath)
-        
-        
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "tableViewCellSavedWeather", for: indexPath)
+            as! TableViewCellSavedWeather
+
+        let weatherData = savedWeatherDataSource[indexPath.row]
+        cell.makeCell(savedWeatherData: weatherData)
+
         return cell
     }
 }
