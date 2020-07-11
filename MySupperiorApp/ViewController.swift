@@ -67,7 +67,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         tapGestureRecognizerCurrentWeather.isEnabled = false
         
         // TableView initializatin
-        // tableViewSavedWeather.rowHeight = 40
+        tableViewSavedWeather.rowHeight = 84
         
         // TableView initialization - cell
         let nibName = UINib.init(nibName: "TableViewCellSavedWeather", bundle: nil)
@@ -248,7 +248,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     func saveCurrentWeatherToTableView() {
         if let savedWeatherData = currentSavedWeatherData {
-            weatherData.append(savedWeatherData.weatherData)
+            weatherData.insert(savedWeatherData.weatherData, at: 0)
             saveWeatherData()
             // Update the Table View
             tableViewSavedWeather.reloadData()

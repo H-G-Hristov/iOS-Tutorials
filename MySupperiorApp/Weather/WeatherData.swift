@@ -83,7 +83,7 @@ class WeatherData: NSObject, NSCoding {
     public var windSpeed: Float
     
     //MARK: Archiving Paths
-     
+    
     static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
     static let ArchiveURL = DocumentsDirectory.appendingPathComponent("weatherData")
     
@@ -115,25 +115,16 @@ class WeatherData: NSObject, NSCoding {
             return nil
         }
         // The locationName is required. If we cannot decode a locationName string, the initializer should fail.
-        guard let temperature = aDecoder.decodeFloat(forKey: WeatherDataPropertyKey.temperature) as? Float else {
-            os_log("Unable to decode WeatherData.temperature", log: OSLog.default, type: .debug)
-            return nil
-        }
+        let temperature = aDecoder.decodeFloat(forKey: WeatherDataPropertyKey.temperature)
+        
         // The locationName is required. If we cannot decode a locationName string, the initializer should fail.
-        guard let humidity = aDecoder.decodeInt64(forKey: WeatherDataPropertyKey.humidity) as? Int64 else {
-            os_log("Unable to decode WeatherData.humidity", log: OSLog.default, type: .debug)
-            return nil
-        }
+        let humidity = aDecoder.decodeInt64(forKey: WeatherDataPropertyKey.humidity)
+        
         // The locationName is required. If we cannot decode a locationName string, the initializer should fail.
-        guard let pressure = aDecoder.decodeInt64(forKey: WeatherDataPropertyKey.pressure) as? Int64 else {
-            os_log("Unable to decode WeatherData.pressure", log: OSLog.default, type: .debug)
-            return nil
-        }
+        let pressure = aDecoder.decodeInt64(forKey: WeatherDataPropertyKey.pressure)
+        
         // The locationName is required. If we cannot decode a locationName string, the initializer should fail.
-        guard let windSpeed = aDecoder.decodeFloat(forKey: WeatherDataPropertyKey.windSpeed) as? Float else {
-            os_log("Unable to decode WeatherData.windSpeed", log: OSLog.default, type: .debug)
-            return nil
-        }
+        let windSpeed = aDecoder.decodeFloat(forKey: WeatherDataPropertyKey.windSpeed)
         
         self.init(locationName:locationName,
                   country:country,
