@@ -8,6 +8,8 @@
 
 import Foundation
 
+import os.log
+
 enum WeatherType {
     case Cloudy
     case Rainy
@@ -69,13 +71,98 @@ struct JSONWeatherData : Codable {
     var cod: Int64
 }
 
-struct WeatherData {
-    var locationName: String
-    var country: String
-    var temperature: Float
-    var humidity: Int8
-    var pressure: Int64
-    var windSpeed: Float
+class WeatherData: NSObject, NSCoding {
+    
+    // MARK: Properties
+    
+    public var locationName: String
+    public var country: String
+    public var temperature: Float
+    public var humidity: Int64
+    public var pressure: Int64
+    public var windSpeed: Float
+    
+    //MARK: Archiving Paths
+     
+    static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
+    static let ArchiveURL = DocumentsDirectory.appendingPathComponent("weatherData")
+    
+    // MARK: Initializers
+    
+    init(locationName: String,
+         country: String,
+         temperature: Float,
+         humidity: Int64,
+         pressure: Int64,
+         windSpeed: Float) {
+        self.locationName = locationName
+        self.country = country
+        self.temperature = temperature
+        self.humidity = humidity
+        self.pressure = pressure
+        self.windSpeed = windSpeed
+    }
+    
+    required convenience init?(coder aDecoder: NSCoder) {
+        // The locationName is required. If we cannot decode a locationName string, the initializer should fail.
+        guard let locationName = aDecoder.decodeObject(forKey: WeatherDataPropertyKey.locationName) as? String else {
+            os_log("Unable to decode WeatherData.locationName", log: OSLog.default, type: .debug)
+            return nil
+        }
+        // The locationName is required. If we cannot decode a locationName string, the initializer should fail.
+        guard let country = aDecoder.decodeObject(forKey: WeatherDataPropertyKey.country) as? String else {
+            os_log("Unable to decode WeatherData.country", log: OSLog.default, type: .debug)
+            return nil
+        }
+        // The locationName is required. If we cannot decode a locationName string, the initializer should fail.
+        guard let temperature = aDecoder.decodeFloat(forKey: WeatherDataPropertyKey.temperature) as? Float else {
+            os_log("Unable to decode WeatherData.temperature", log: OSLog.default, type: .debug)
+            return nil
+        }
+        // The locationName is required. If we cannot decode a locationName string, the initializer should fail.
+        guard let humidity = aDecoder.decodeInt64(forKey: WeatherDataPropertyKey.humidity) as? Int64 else {
+            os_log("Unable to decode WeatherData.humidity", log: OSLog.default, type: .debug)
+            return nil
+        }
+        // The locationName is required. If we cannot decode a locationName string, the initializer should fail.
+        guard let pressure = aDecoder.decodeInt64(forKey: WeatherDataPropertyKey.pressure) as? Int64 else {
+            os_log("Unable to decode WeatherData.pressure", log: OSLog.default, type: .debug)
+            return nil
+        }
+        // The locationName is required. If we cannot decode a locationName string, the initializer should fail.
+        guard let windSpeed = aDecoder.decodeFloat(forKey: WeatherDataPropertyKey.windSpeed) as? Float else {
+            os_log("Unable to decode WeatherData.windSpeed", log: OSLog.default, type: .debug)
+            return nil
+        }
+        
+        self.init(locationName:locationName,
+                  country:country,
+                  temperature:temperature,
+                  humidity:humidity,
+                  pressure:pressure,
+                  windSpeed:windSpeed)
+    }
+    
+    // MARK: Methods
+    
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(locationName, forKey: WeatherDataPropertyKey.locationName)
+        aCoder.encode(country, forKey: WeatherDataPropertyKey.country)
+        aCoder.encode(temperature, forKey: WeatherDataPropertyKey.temperature)
+        aCoder.encode(humidity, forKey: WeatherDataPropertyKey.humidity)
+        aCoder.encode(pressure, forKey: WeatherDataPropertyKey.pressure)
+        aCoder.encode(windSpeed, forKey: WeatherDataPropertyKey.windSpeed)
+    }
+    
+}
+
+struct WeatherDataPropertyKey {
+    static let locationName = "locationName"
+    static let country = "country"
+    static let temperature = "temperature"
+    static let humidity = "humidity"
+    static let pressure = "pressure"
+    static let windSpeed = "windSpeed"
 }
 
 class WeatherDataOnlineManager {
@@ -102,7 +189,7 @@ class WeatherDataOnlineManager {
             locationName: jsonData.name,
             country: jsonData.sys.country,
             temperature: Float(jsonData.main.temp),
-            humidity: Int8(jsonData.main.humidity),
+            humidity: Int64(jsonData.main.humidity),
             pressure: Int64(jsonData.main.humidity),
             windSpeed: Float(jsonData.main.pressure)
         )

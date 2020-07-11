@@ -36,7 +36,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     private var currentSavedWeatherData: SavedWeatherData? = nil
     
-    private var savedWeatherDataSource = [SavedWeatherData]()
+    private var weatherData = [WeatherData]()
     
     // MARK: Initializers and delegates
     
@@ -66,13 +66,16 @@ class ViewController: UIViewController, UITextFieldDelegate {
         labelCurrentWeather.text = nil
         tapGestureRecognizerCurrentWeather.isEnabled = false
         
-        // TableView initialization
-        tableViewSavedWeather.delegate = self
-        tableViewSavedWeather.dataSource = self
+        // TableView initializatin
+        // tableViewSavedWeather.rowHeight = 40
         
-        // TableView initialize cell
+        // TableView initialization - cell
         let nibName = UINib.init(nibName: "TableViewCellSavedWeather", bundle: nil)
-        self.tableViewSavedWeather.register(nibName, forCellReuseIdentifier: "tableViewCellSavedWeather")
+        tableViewSavedWeather.register(nibName, forCellReuseIdentifier: "tableViewCellSavedWeather")
+        
+        if let loadedWeatherData = loadWeatherData() {
+            weatherData += loadedWeatherData
+        }
     }
     
     // MARK: Actions
@@ -245,33 +248,86 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     func saveCurrentWeatherToTableView() {
         if let savedWeatherData = currentSavedWeatherData {
-            savedWeatherDataSource.append(savedWeatherData)
+            weatherData.append(savedWeatherData.weatherData)
+            saveWeatherData()
+            // Update the Table View
+            tableViewSavedWeather.reloadData()
         }
     }
-
+    
 }
 
 extension ViewController: UITableViewDataSource {
-
+    
     // MARK: TableView
-
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        return 1
-//    }
-
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return savedWeatherDataSource.count
+        return weatherData.count
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "tableViewCellSavedWeather", for: indexPath)
-            as! TableViewCellSavedWeather
-
-        let weatherData = savedWeatherDataSource[indexPath.row]
-        cell.makeCell(savedWeatherData: weatherData)
-
-        return cell
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "tableViewCellSavedWeather", for: indexPath)
+            as? TableViewCellSavedWeather {
+            
+            let weatherData = self.weatherData[indexPath.row]
+            if cell.makeCell(weatherData: weatherData) {
+                return cell
+            }
+        }
+        
+        return UITableViewCell()
     }
+    
+    // Override to support editing the table view.
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            // Delete the row from the data source
+            weatherData.remove(at: indexPath.row)
+            saveWeatherData()
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        } else if editingStyle == .insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        // Return false if you do not want the specified item to be editable.
+        return true
+    }
+    
+    private func saveWeatherData() {
+        do {
+            let data = try NSKeyedArchiver.archivedData(withRootObject: weatherData, requiringSecureCoding: false)
+            try data.write(to: WeatherData.ArchiveURL)
+        } catch {
+            os_log("Failed to save WeatherData.", log: OSLog.default, type: .error)
+            
+            return
+        }
+        os_log("WeatherData successfully saved.", log: OSLog.default, type: .debug)
+    }
+    
+    private func loadWeatherData() -> [WeatherData]? {
+        if let nsData = NSData(contentsOfFile: WeatherData.ArchiveURL.path) {
+            do {
+                let data = Data(referencing:nsData)
+                if let loadedWeatherData = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [WeatherData] {
+                    return loadedWeatherData
+                }
+            } catch {
+                os_log("Failed to load WeatherData.", log: OSLog.default, type: .error)
+            }
+        } else {
+            os_log("Saved data file not found", log: OSLog.default, type: .error)
+        }
+        
+        return nil
+    }
+    
 }
 
 extension ViewController: UITableViewDelegate {

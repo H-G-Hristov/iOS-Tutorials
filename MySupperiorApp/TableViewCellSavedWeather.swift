@@ -11,10 +11,10 @@ import UIKit
 class TableViewCellSavedWeather: UITableViewCell {
     
     // MARK: Properties
-    @IBOutlet weak var imageViewWeather: UIImageView!
     @IBOutlet weak var labelLocationName: UILabel!
     @IBOutlet weak var labelCountry: UILabel!
     @IBOutlet weak var labelTemperature: UILabel!
+    @IBOutlet weak var imageViewWeather: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,14 +27,18 @@ class TableViewCellSavedWeather: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func makeCell(savedWeatherData: SavedWeatherData) {
-        self.imageViewWeather.image = UIImage(named: savedWeatherData.imageName)
+    func makeCell(weatherData: WeatherData) -> Bool {
+        guard let savedWeatherData = SavedWeatherData(weatherData: weatherData) else {
+            return false
+        }
         
-        self.labelLocationName.text = savedWeatherData.weatherData.locationName
-        
-        self.labelCountry.text = savedWeatherData.weatherData.country
+        imageViewWeather.image = UIImage(named: savedWeatherData.imageName)
+        labelLocationName.text = savedWeatherData.weatherData.locationName
+        labelCountry.text = savedWeatherData.weatherData.country
         
         let temperature = savedWeatherData.weatherData.temperature - 273
-        self.labelTemperature.text = "\(temperature)°C"
+        labelTemperature.text = String(format: "%.2f°C", temperature)
+        
+        return true
     }
 }
