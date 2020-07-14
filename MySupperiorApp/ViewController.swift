@@ -68,6 +68,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         // TableView initializatin
         tableViewSavedWeather.rowHeight = 84
+        tableViewSavedWeather.layer.borderColor = UIColor.systemBlue.cgColor
+        tableViewSavedWeather.layer.borderWidth = 1.0
         
         // TableView initialization - cell
         let nibName = UINib.init(nibName: "TableViewCellSavedWeather", bundle: nil)
@@ -140,7 +142,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         let viewControllerLocalWeather = segue.destination as! ViewControllerLocalWeather
         
-        viewControllerLocalWeather.savedWeatherData = self.currentSavedWeatherData
+        if let sender = sender as?  UIGestureRecognizer, sender === tapGestureRecognizerCurrentWeather {
+            viewControllerLocalWeather.savedWeatherData = self.currentSavedWeatherData
+        };
     }
     
     // MARK: UITextFieldDelegate
@@ -153,7 +157,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
             setButtonDisabled(button: buttonGetWeather)
             
         } else {
-            
             setButtonEnabled(button: buttonGetForecast)
             setButtonEnabled(button: buttonGetWeather)
         }
@@ -240,14 +243,16 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
     func clearCurrentWeather() {
-        // TODO: changeViewColor(weatherType: weatherType)
-        
+        imageViewCurrentWeather.backgroundColor = nil
         imageViewCurrentWeather.image = nil
+        labelCurrentWeather.backgroundColor = nil
         labelCurrentWeather.text = nil
+        tapGestureRecognizerCurrentWeather.isEnabled = false
     }
     
     func saveCurrentWeatherToTableView() {
         if let savedWeatherData = currentSavedWeatherData {
+            clearCurrentWeather()
             weatherData.insert(savedWeatherData.weatherData, at: 0)
             saveWeatherData()
             // Update the Table View
@@ -331,4 +336,17 @@ extension ViewController: UITableViewDataSource {
 }
 
 extension ViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let viewControllerLocalWeather = storyboard?.instantiateViewController(withIdentifier: "ViewControllerLocalWeather") as! ViewControllerLocalWeather
+        viewControllerLocalWeather.navigationItem.setRightBarButton(nil, animated: false)
+        
+        let savedWeatherData = SavedWeatherData(weatherData: self.weatherData[indexPath.row])
+        viewControllerLocalWeather.savedWeatherData = savedWeatherData
+        
+        
+        navigationController?.pushViewController(viewControllerLocalWeather, animated: true)
+    }
+    
 }

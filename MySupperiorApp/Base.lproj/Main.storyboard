@@ -105,7 +105,7 @@
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="tableViewCellSavedWeather" rowHeight="70" id="LaY-TU-elH" customClass="TableViewCellCurrentWeather" customModule="MySupperiorApp" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="288" height="70"/>
-                                                <autoresizingMask key="autoresizingMask"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="LaY-TU-elH" id="Fvm-lY-cDJ">
                                                     <rect key="frame" x="0.0" y="0.0" width="288" height="70"/>
                                                     <autoresizingMask key="autoresizingMask"/>
@@ -165,7 +165,7 @@
         <!--Local Weather-->
         <scene sceneID="WbM-Xp-ZWT">
             <objects>
-                <viewController id="bkI-WJ-23a" customClass="ViewControllerLocalWeather" customModule="MySupperiorApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ViewControllerLocalWeather" id="bkI-WJ-23a" customClass="ViewControllerLocalWeather" customModule="MySupperiorApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7dj-wx-nnY">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
