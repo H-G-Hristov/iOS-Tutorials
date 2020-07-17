@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import MySupperiorApp
+@testable import OpenWeatherMap
 
 class MySupperiorAppTests: XCTestCase {
     
@@ -35,8 +35,6 @@ class MySupperiorAppTests: XCTestCase {
     
     // Confirm that the SavedWeatherData initializer returns a Meal object when passed valid parameters.
     func testSavedWeatherDataInitializationSucceeds() {
-        let image: UIImage? = nil
-        let weather = String("Weather")
         let weatherData = WeatherData(
             locationName: "London",
             country: "uk",
@@ -45,15 +43,13 @@ class MySupperiorAppTests: XCTestCase {
             pressure: 99,
             windSpeed: 99)
         
-        let savedWeatherData = SavedWeatherData.init(image: image, weather: weather, weatherData: weatherData)
+        let savedWeatherData = SavedWeatherData.init(weatherData: weatherData)
         
         XCTAssertNotNil(savedWeatherData)
     }
     
     // Confirm that the SavedWeatherData initialier returns nil when passed a negative rating or an empty name.
     func testSavedWeatherDataInitializationFails() {
-        let image: UIImage? = nil
-        let weather = String()
         let weatherData = WeatherData(
             locationName: "London",
             country: "uk",
@@ -63,7 +59,7 @@ class MySupperiorAppTests: XCTestCase {
             windSpeed: 99)
         
         // Test for empty weater string
-        let savedWeatherData_EmptyString = SavedWeatherData.init(image: image, weather: weather, weatherData: weatherData)
+        let savedWeatherData_EmptyString = SavedWeatherData.init(weatherData: weatherData)
         
         XCTAssertNil(savedWeatherData_EmptyString)
     }

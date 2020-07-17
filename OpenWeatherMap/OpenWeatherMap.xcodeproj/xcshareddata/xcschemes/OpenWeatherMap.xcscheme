@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "380128C82493A05700C714BC"
-               BuildableName = "MySupperiorApp.app"
-               BlueprintName = "MySupperiorApp"
-               ReferencedContainer = "container:MySupperiorApp.xcodeproj">
+               BuildableName = "OpenWeatherMap.app"
+               BlueprintName = "OpenWeatherMap"
+               ReferencedContainer = "container:OpenWeatherMap.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "380128E12493A05900C714BC"
-               BuildableName = "MySupperiorAppTests.xctest"
-               BlueprintName = "MySupperiorAppTests"
-               ReferencedContainer = "container:MySupperiorApp.xcodeproj">
+               BuildableName = "OpenWeatherMapTests.xctest"
+               BlueprintName = "OpenWeatherMapTests"
+               ReferencedContainer = "container:OpenWeatherMap.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -43,9 +43,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "380128EC2493A05900C714BC"
-               BuildableName = "MySupperiorAppUITests.xctest"
-               BlueprintName = "MySupperiorAppUITests"
-               ReferencedContainer = "container:MySupperiorApp.xcodeproj">
+               BuildableName = "OpenWeatherMapUITests.xctest"
+               BlueprintName = "OpenWeatherMapUITests"
+               ReferencedContainer = "container:OpenWeatherMap.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -65,9 +65,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "380128C82493A05700C714BC"
-            BuildableName = "MySupperiorApp.app"
-            BlueprintName = "MySupperiorApp"
-            ReferencedContainer = "container:MySupperiorApp.xcodeproj">
+            BuildableName = "OpenWeatherMap.app"
+            BlueprintName = "OpenWeatherMap"
+            ReferencedContainer = "container:OpenWeatherMap.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -82,9 +82,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "380128C82493A05700C714BC"
-            BuildableName = "MySupperiorApp.app"
-            BlueprintName = "MySupperiorApp"
-            ReferencedContainer = "container:MySupperiorApp.xcodeproj">
+            BuildableName = "OpenWeatherMap.app"
+            BlueprintName = "OpenWeatherMap"
+            ReferencedContainer = "container:OpenWeatherMap.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:MySupperiorApp.xcodeproj">
+      location = "self:/Users/hristohristov/Desktop/iOS-Tutorials/OpenWeatherMap/OpenWeatherMap.xcodeproj">
    </FileRef>
 </Workspace>
