@@ -42,7 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		380128C92493A05700C714BC /* MySupperiorApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MySupperiorApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		380128C92493A05700C714BC /* OpenWeatherMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenWeatherMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		380128CC2493A05700C714BC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		380128CE2493A05700C714BC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		380128D02493A05700C714BC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -103,7 +103,7 @@
 		380128CA2493A05700C714BC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				380128C92493A05700C714BC /* MySupperiorApp.app */,
+				380128C92493A05700C714BC /* OpenWeatherMap.app */,
 				380128E22493A05900C714BC /* MySupperiorAppTests.xctest */,
 				380128ED2493A05900C714BC /* MySupperiorAppUITests.xctest */,
 			);
@@ -182,7 +182,7 @@
 			);
 			name = MySupperiorApp;
 			productName = MySupperiorApp;
-			productReference = 380128C92493A05700C714BC /* MySupperiorApp.app */;
+			productReference = 380128C92493A05700C714BC /* OpenWeatherMap.app */;
 			productType = "com.apple.product-type.application";
 		};
 		380128E12493A05900C714BC /* MySupperiorAppTests */ = {
@@ -484,8 +484,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mysupercomp.MySupperiorApp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mysupercomp.OpenWeatherMap;
+				PRODUCT_NAME = OpenWeatherMap;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -501,8 +501,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mysupercomp.MySupperiorApp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mysupercomp.OpenWeatherMap;
+				PRODUCT_NAME = OpenWeatherMap;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
