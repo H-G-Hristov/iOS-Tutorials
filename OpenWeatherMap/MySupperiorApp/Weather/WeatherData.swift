@@ -186,8 +186,7 @@ class WeatherDataOnlineManager {
         )
     }
     
-    private func handleData(data: Data?)
-    {
+    private func handleData(data: Data?) {
         do {
             let jsonData = try self.jsonDecoder.decode(JSONWeatherData.self, from: data!)
             let weatherData = self.makeWeatherDataCurrent(jsonData: jsonData)
@@ -202,8 +201,7 @@ class WeatherDataOnlineManager {
         }
     }
     
-    private func handleError(error: Error?)
-    {
+    private func handleError(error: Error?) {
         // ViewController methods need to be called on the main thread async
         DispatchQueue.main.async {
             self.viewController.showToast(message: "Error receiving data from server: \(String(describing: error))")

@@ -190,7 +190,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="cor-H7-im4">
+                                    <stackView opaque="NO" contentMode="top" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="cor-H7-im4">
                                         <rect key="frame" x="0.0" y="393" width="240" height="17"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Humidity" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2ad-Ka-Dgy">
@@ -208,7 +208,7 @@
                                             </label>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="rzY-Wz-kwg">
+                                    <stackView opaque="NO" contentMode="top" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="rzY-Wz-kwg">
                                         <rect key="frame" x="0.0" y="426" width="240" height="17"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wind" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lpC-V1-fEv">
@@ -227,7 +227,7 @@
                                             </label>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="WMp-d5-PhK">
+                                    <stackView opaque="NO" contentMode="top" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="WMp-d5-PhK">
                                         <rect key="frame" x="0.0" y="459" width="240" height="17"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pressure" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2Gd-km-dKG">
